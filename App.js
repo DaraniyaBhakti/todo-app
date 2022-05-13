@@ -1,12 +1,34 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React , {useEffect} from 'react';
+import { StyleSheet, TouchableOpacity} from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import UserScreen from './src/screens/UserScreen';
+import TodoListScreen from './src/screens/TodoListScreen';
+import AddItemScreen from './src/screens/AddItemScreen';
+import * as SQLite from 'expo-sqlite';
 
+global.db = SQLite.openDatabase('db.todoDatabase ');
+
+const Stack = createNativeStackNavigator();
+function TodoList() {
+  return(
+    <Stack.Navigator>
+      <Stack.Screen name='Todo' component={TodoListScreen} />
+      <Stack.Screen name = 'AddItem' component={AddItemScreen} />
+    </Stack.Navigator>
+  )
+  
+}
 export default function App() {
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="User" component={UserScreen}/>
+        <Stack.Screen name = "TodoList" component={TodoList} options={{headerShown:false}}/>
+      </Stack.Navigator>
+    </NavigationContainer>
+
   );
 }
 
