@@ -74,7 +74,7 @@ const AddItemScreen = ({navigation}) => {
         },
         null,
         );
-        console.log("BD")
+        
         db.transaction((tx) => {
                     tx.executeSql("select * from TodoList where userId = ?", [3], (_, { rows }) =>
                         console.log(JSON.stringify({rows}))
