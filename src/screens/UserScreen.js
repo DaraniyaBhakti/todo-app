@@ -21,7 +21,7 @@ const UserScreen = (props) => {
   const [userId, setUserId] =useState();
 
   const addUser = (text) => {
-    //console.log("called")
+    
     // is text empty?
     if (text === null || text === "") {
       alert("Enter proper name")
