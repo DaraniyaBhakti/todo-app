@@ -10,13 +10,6 @@ const ListItem = ({ item }) => {
                 (txObj, resultSet) => {
                     if (resultSet.rowsAffected > 0) {
                         console.log('deleted')
-                        //   let newList = this.state.data.filter(data => {
-                        //     if (data.id === id)
-                        //       return false
-                        //     else
-                        //       return true
-                        //   })
-                        //   this.setState({ data: newList })
                     }
                 }
             )
@@ -34,19 +27,13 @@ const ListItem = ({ item }) => {
             </View>
             <Text style={styles.description}>{item.description}</Text>
             <View style={styles.dateView}>
-                <Text style={styles.dateLable}>Start date :</Text><Text>{item.startDate}</Text>
+                <Text style={styles.dateLable}>Start date :</Text><Text> {item.startDate}</Text>
                 <Text style={styles.dateLable}> Due date :</Text><Text> {item.dueDate}</Text>
             </View>
             <View style={styles.dateView}>
-                <Text style={styles.dateLable}>Created on :</Text><Text>{item.createdDate}</Text>
-                <Text style={styles.dateLable}> Updated on :</Text><Text>{item.updatedDate}</Text>
+                <Text style={styles.dateLable}>Created on :</Text><Text> {item.createdDate}</Text>
+                <Text style={styles.dateLable}> Updated on :</Text><Text> {item.updatedDate}</Text>
             </View>
-
-            {/* <View style={styles.buttonView}>
-                <AntDesign name={"edit"} size={25} color="#335599" style={styles.button}/>
-                <AntDesign name={"delete"} size={25} color="#335599" style={styles.button} />
-            </View> */}
-
 
         </View>
     )
@@ -82,7 +69,7 @@ const styles = StyleSheet.create({
     },
     dateView: {
         flexDirection: 'row',
-        marginBottom: '2%'
+        marginBottom: '2%',
     },
     dateLable: {
         fontWeight: '500'

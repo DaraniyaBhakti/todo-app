@@ -57,10 +57,10 @@ const AddItemScreen = ({navigation}) => {
 
         if (isValidItem()) {
             insertItem()
-            // navigation.navigate('Todo');
-            console.log('inserted data')
+            
+            navigation.navigate('Todo');
         } else {
-            console.log('data not ok')
+            alert("Insert proper data");
         }
     }
 
@@ -70,25 +70,13 @@ const AddItemScreen = ({navigation}) => {
         let finalDate = dateCreated !== ''  ? `${tempDate[1]} ${tempDate[2]} ${tempDate[3]}`: '';
         db.transaction((tx) => {
             tx.executeSql("insert into TodoList (title,description,startDate,dueDate,createdDate,updatedDate,status,userId) values (?,?,?,?,?,?,?,?)",
-                [itemData.title, itemData.description, itemData.startDate, itemData.dueDate, finalDate, 'xcvybub', itemData.status, 3]);
+                [itemData.title, itemData.description, itemData.startDate, itemData.dueDate, finalDate, '', itemData.status, 3]);
         },
         null,
         );
-        
-        db.transaction((tx) => {
-                    tx.executeSql("select * from TodoList where userId = ?", [3], (_, { rows }) =>
-                        console.log(JSON.stringify({rows}))
-                      );
-                    //   tx.executeSql("select * from TodoList where userId = ?", [2], 
-                    //     (txObj, { rows: { _array } }) => setTodoItems({ _array }) 
-                    // //    =>
-                    // //   console.log(JSON.stringify(rows))
-                    // );
-                  });
                   
     }
     const handleOnChange = (name, event) => {
-
         setItemData((old) => ({
             ...old,
             [name]: event
