@@ -4,13 +4,24 @@ import StatusRadioButtonComponent from '../components/StatusRadioButtonComponent
 import ButtonComponent from '../components/ButtonComponents';
 import DatePickerComponent from '../components/DatePickerComponents';
 
-const AddItemScreen = ({navigation}) => {
+const AddItemScreen = ({ route, navigation }) => {
 
     const [itemData, setItemData] = useState()
+    const { id, add, itemId } = route.params;
 
     useEffect(() => {
         generateItemData();
+
+        db.transaction((tx) => {
+            tx.executeSql("select * from TodoList where id = ? ", [itemId], (_, { rows }) =>
+                {  
+                  console.log(JSON.stringify(rows._array[0]['title']))
+                //   setItemData(rows._array[0])
+                }
+            );
+        })
     }, [])
+    console.log(itemData)
     const generateItemData = () => {
         setItemData((old) => ({
             title: "",
@@ -57,24 +68,28 @@ const AddItemScreen = ({navigation}) => {
 
         if (isValidItem()) {
             insertItem()
-            
-            navigation.navigate('Todo');
+
+            navigation.navigate('TodoList',
+                {
+                    screen: 'Todo',
+                    params: { id: id }
+                });
         } else {
             alert("Insert proper data");
         }
     }
 
     const insertItem = () => {
-        let dateCreated=new Date()
+        let dateCreated = new Date()
         let tempDate = dateCreated.toString().split(' ');
-        let finalDate = dateCreated !== ''  ? `${tempDate[1]} ${tempDate[2]} ${tempDate[3]}`: '';
+        let finalDate = dateCreated !== '' ? `${tempDate[1]} ${tempDate[2]} ${tempDate[3]}` : '';
         db.transaction((tx) => {
             tx.executeSql("insert into TodoList (title,description,startDate,dueDate,createdDate,updatedDate,status,userId) values (?,?,?,?,?,?,?,?)",
-                [itemData.title, itemData.description, itemData.startDate, itemData.dueDate, finalDate, '', itemData.status, 3]);
+                [itemData.title, itemData.description, itemData.startDate, itemData.dueDate, finalDate, '', itemData.status, id]);
         },
-        null,
+            null,
         );
-                  
+
     }
     const handleOnChange = (name, event) => {
         setItemData((old) => ({
@@ -105,7 +120,7 @@ const AddItemScreen = ({navigation}) => {
             <DatePickerComponent placeholder="Select start date" onChange={handleOnChange} name="startDate" />
             <DatePickerComponent placeholder="Select due date" onChange={handleOnChange} name="dueDate" />
 
-            <ButtonComponent title="Add" onPress={() => buttonClick()} />
+            <ButtonComponent title={add == 1 ? "Add" : "Update"} onPress={() => buttonClick()} />
         </View>
 
 

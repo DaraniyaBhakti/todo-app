@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import AntDesign from '@expo/vector-icons/AntDesign';
 
-const ListItem = ({ item }) => {
+const ListItem = ({ item ,navigation}) => {
 
     const deleteItem = () => {
         db.transaction(tx => {
@@ -15,14 +15,24 @@ const ListItem = ({ item }) => {
             )
         })
     }
+
+    const editItem = () => {
+         navigation.navigate('TodoList',{
+            screen : 'AddItem',
+            params : {id : id, add:0, itemId : item.id}
+        })
+    } 
+    
     return (
         <View style={styles.container}>
             <View style={styles.headerView}>
                 <Text style={styles.title}>{item.title}</Text>
                 <Text style={styles.status}>{item.status}</Text>
                 <View style={styles.buttonView}>
-                    <AntDesign name={"edit"} size={25} color="#335599" style={styles.button} />
-                    <AntDesign name={"delete"} size={25} color="#335599" style={styles.button} onPress={() => deleteItem()} />
+                    <AntDesign name={"edit"} size={25} color="#335599" style={styles.button} 
+                        onPress={()=> editItem()}/>
+                    <AntDesign name={"delete"} size={25} color="#335599" style={styles.button} 
+                        onPress={() => deleteItem()} />
                 </View>
             </View>
             <Text style={styles.description}>{item.description}</Text>

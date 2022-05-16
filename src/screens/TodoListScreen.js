@@ -2,12 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { View, FlatList} from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 import ListItem from '../components/ListItemComponents';
-const TodoListScreen = ({ navigation }) => {
+const TodoListScreen = ({ route,navigation }) => {
+    // console.log(route.params)
+     
+    const {id} = route.params;
+    // console.log(id+"  routeee")
     const [todoItems, setTodoItems] = useState([])
     React.useLayoutEffect(() => {
         navigation.setOptions({
             headerRight: () => (
-                <Entypo name="add-to-list" size={27} color="#335599" onPress={() => navigation.navigate('AddItem')} />
+                <Entypo name="add-to-list" size={27} color="#335599" 
+                    onPress={() => navigation.navigate('TodoList',{
+                        screen : 'AddItem',
+                        params : {id : id, add:1}
+                    })} />
 
             ),
         })
@@ -31,9 +39,9 @@ const TodoListScreen = ({ navigation }) => {
     }, []);
 
     useEffect(() => {
-
+    
         db.transaction((tx) => {
-            tx.executeSql("select * from TodoList where userId=?", [3],
+            tx.executeSql("select * from TodoList where userId=?", [id],
                 (txObj, { rows: { _array } }) => setTodoItems(_array)
             );
         });
@@ -42,7 +50,7 @@ const TodoListScreen = ({ navigation }) => {
     })
 
     const renderItem = ({ item }) => (
-        <ListItem item={item} />
+        <ListItem item={item} navigation={navigation}/>
     );
     return (
         <View>
