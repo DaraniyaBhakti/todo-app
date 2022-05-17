@@ -3,10 +3,9 @@ import { View, FlatList} from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 import ListItem from '../components/ListItemComponents';
 const TodoListScreen = ({ route,navigation }) => {
-    // console.log(route.params)
+
      
     const {id} = route.params;
-    // console.log(id+"  routeee")
     const [todoItems, setTodoItems] = useState([])
     React.useLayoutEffect(() => {
         navigation.setOptions({
@@ -46,7 +45,6 @@ const TodoListScreen = ({ route,navigation }) => {
             );
         });
 
-
     })
 
     const renderItem = ({ item }) => (
@@ -57,7 +55,6 @@ const TodoListScreen = ({ route,navigation }) => {
             <FlatList
                 data={todoItems}
                 renderItem={renderItem}
-            // keyExtractor={item => item.id}
             />
         </View>
 

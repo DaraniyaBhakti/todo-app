@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import AntDesign from '@expo/vector-icons/AntDesign';
 
-const ListItem = ({ item ,navigation}) => {
+const ListItem = ({ item, navigation }) => {
 
     const deleteItem = () => {
         db.transaction(tx => {
@@ -17,33 +17,42 @@ const ListItem = ({ item ,navigation}) => {
     }
 
     const editItem = () => {
-         navigation.navigate('TodoList',{
-            screen : 'AddItem',
-            params : {id : item.userId , add:0, itemId : item.id}
+        navigation.navigate('TodoList', {
+            screen: 'AddItem',
+            params: { id: item.userId, add: 0, itemId: item.id }
         })
-    } 
-    
+
+
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.headerView}>
                 <Text style={styles.title}>{item.title}</Text>
                 <Text style={styles.status}>{item.status}</Text>
                 <View style={styles.buttonView}>
-                    <AntDesign name={"edit"} size={25} color="#335599" style={styles.button} 
-                        onPress={()=> editItem()}/>
-                    <AntDesign name={"delete"} size={25} color="#335599" style={styles.button} 
+                    <AntDesign name={"edit"} size={25} color="#335599" style={styles.button}
+                        onPress={() => editItem()} />
+                    <AntDesign name={"delete"} size={25} color="#335599" style={styles.button}
                         onPress={() => deleteItem()} />
                 </View>
             </View>
             <Text style={styles.description}>{item.description}</Text>
             <View style={styles.dateView}>
                 <Text style={styles.dateLable}>Start date :</Text><Text> {item.startDate}</Text>
-                <Text style={styles.dateLable}> Due date :</Text><Text> {item.dueDate}</Text>
+            </View>
+            <View style={styles.dateView}>
+                <Text style={styles.dateLable}>Due date :</Text><Text> {item.dueDate}</Text>
             </View>
             <View style={styles.dateView}>
                 <Text style={styles.dateLable}>Created on :</Text><Text> {item.createdDate}</Text>
-                <Text style={styles.dateLable}> Updated on :</Text><Text> {item.updatedDate}</Text>
             </View>
+
+            {!!(item.updatedDate) ?
+                <View style={styles.dateView}>
+                    <Text style={styles.dateLable}>Updated on :</Text><Text> {item.updatedDate}</Text>
+                </View> : null
+            }
 
         </View>
     )

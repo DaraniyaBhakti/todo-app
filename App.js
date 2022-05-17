@@ -13,7 +13,7 @@ const Stack = createNativeStackNavigator();
 function TodoList() {
   return(
     <Stack.Navigator>
-      <Stack.Screen name='Todo' component={TodoListScreen} />
+      <Stack.Screen name='Todo' component={TodoListScreen} options={{title:"To-Do List"}} />
       <Stack.Screen name = 'AddItem' component={AddItemScreen} />
     </Stack.Navigator>
   )
@@ -24,7 +24,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="User" component={UserScreen}/>
+        <Stack.Screen name="User" component={UserScreen} options={{headerShown:false}}/>
         <Stack.Screen name = "TodoList" component={TodoList} options={{headerShown:false}}/>
       </Stack.Navigator>
     </NavigationContainer>

@@ -19,16 +19,20 @@ const DatePickerComponent = (props) => {
     const handleConfirm = (date) => {
         setDate(date);
         let tempDate = date.toString().split(' ');
-        let finalDate = date !== ''  ? `${tempDate[1]} ${tempDate[2]} ${tempDate[3]}`: '';
-        props.onChange(props.name,finalDate )
+        let finalDate = date !== '' ? `${tempDate[1]} ${tempDate[2]} ${tempDate[3]}` : '';
+        props.onChange(finalDate)
         hideDatePicker();
     };
 
     const getDate = () => {
         let tempDate = date.toString().split(' ');
-        return date !== ''
-            ? `${tempDate[1]} ${tempDate[2]} ${tempDate[3]}`
-            : '';
+        if (props.addItem === 0) {
+            return props.dateValue;
+        } else {
+            return date !== ''
+                ? `${tempDate[1]} ${tempDate[2]} ${tempDate[3]}`
+                : '';
+        }
     };
 
     return (
@@ -37,7 +41,7 @@ const DatePickerComponent = (props) => {
                 style={styles.textInput}
                 value={getDate()}
                 placeholder={props.placeholder}
-                onChange={(event)=>props.onChange(props.name,event )}
+                onChange={(e) => props.onChange(e)}
             />
             <TouchableOpacity onPress={showDatePicker}>
                 <MaterialIcons style={styles.icon} name="date-range" size={28} color="#335599" />
@@ -56,22 +60,22 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         marginHorizontal: '5%',
-        marginTop:'3%',  
-        borderWidth:1,
-        borderRadius:8,
-        borderColor:'#e2e2e2',
-        backgroundColor:'white',
+        marginTop: '3%',
+        borderWidth: 1,
+        borderRadius: 8,
+        borderColor: '#e2e2e2',
+        backgroundColor: 'white',
         justifyContent: 'space-between',
-        paddingHorizontal:'6%',
-        alignItems:'center',
-        paddingVertical:'4%'
+        paddingHorizontal: '6%',
+        alignItems: 'center',
+        paddingVertical: '4%'
     },
     icon: {
-       
+
     },
     textInput: {
-        fontSize:15,
-        width:'80%'
+        fontSize: 15,
+        width: '80%'
     }
 
 })
