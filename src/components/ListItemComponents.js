@@ -19,7 +19,7 @@ const ListItem = ({ item ,navigation}) => {
     const editItem = () => {
          navigation.navigate('TodoList',{
             screen : 'AddItem',
-            params : {id : id, add:0, itemId : item.id}
+            params : {id : item.userId , add:0, itemId : item.id}
         })
     } 
     

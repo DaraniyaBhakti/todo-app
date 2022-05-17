@@ -12,16 +12,17 @@ const AddItemScreen = ({ route, navigation }) => {
     useEffect(() => {
         generateItemData();
 
-        db.transaction((tx) => {
+        if(add === 0)
+        {db.transaction((tx) => {
             tx.executeSql("select * from TodoList where id = ? ", [itemId], (_, { rows }) =>
                 {  
-                  console.log(JSON.stringify(rows._array[0]['title']))
-                //   setItemData(rows._array[0])
+                  console.log(JSON.stringify(rows._array[0]))
+                 
                 }
             );
-        })
+        })}
     }, [])
-    console.log(itemData)
+    
     const generateItemData = () => {
         setItemData((old) => ({
             title: "",
